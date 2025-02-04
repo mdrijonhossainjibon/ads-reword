@@ -7,7 +7,7 @@ declare global {
   } | undefined;
 }
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ads-tg';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://admin:admin@atlascluster.nei8u.mongodb.net/';
 
 if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable inside .env');
