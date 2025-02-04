@@ -1,0 +1,8 @@
+// User Action Types
+export const FETCH_USER_REQUEST = 'FETCH_USER_REQUEST';
+export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
+export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
+
+export const GET_ME_REQUEST = 'GET_ME_REQUEST';
+export const GET_ME_SUCCESS = 'GET_ME_SUCCESS';
+export const GET_ME_FAILURE = 'GET_ME_FAILURE';
