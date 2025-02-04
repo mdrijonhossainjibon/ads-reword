@@ -29,7 +29,7 @@ export default function LiveChatButton() {
   useEffect(() => {
     if (isOpen && session?.user) {
       const setupWebSocket = async () => {
-        const ws = await initializeWebSocket();
+       /*  const ws = initializeWebSocket();
         if (ws) {
           setIsConnected(true);
           setConnectionError(null);
@@ -61,7 +61,7 @@ export default function LiveChatButton() {
         } else {
           setConnectionError('Failed to initialize chat');
           setIsConnected(false);
-        }
+        } */
       };
 
       setupWebSocket();

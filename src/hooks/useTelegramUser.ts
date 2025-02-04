@@ -1,33 +1,6 @@
 import { useEffect, useState } from 'react';
 
-declare global {
-    interface Window {
-        Telegram: {
-            WebApp: {
-                initDataUnsafe: {
-                    user?: {
-                        id: number;
-                        first_name: string;
-                        last_name?: string;
-                        username?: string;
-                        language_code?: string;
-                        is_premium?: boolean;
-                    };
-                };
-                ready(): void;
-                close(): void;
-                expand(): void;
-                MainButton: {
-                    text: string;
-                    show(): void;
-                    hide(): void;
-                    enable(): void;
-                    disable(): void;
-                };
-            };
-        };
-    }
-}
+
 
 interface TelegramUser {
     id: number | null;
@@ -51,7 +24,7 @@ export function useTelegramUser() {
         
         if (webApp) {
             // Ensure the WebApp is ready
-            webApp.ready();
+            //webApp.ready();
             
             const tgUser = webApp.initDataUnsafe?.user;
             if (tgUser) {

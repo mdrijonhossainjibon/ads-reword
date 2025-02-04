@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../../auth/[...nextauth]/route';
+ 
 import TelegramBot from 'node-telegram-bot-api';
+import { authOptions } from '@/lib/auth';
 
 // Initialize Telegram bot with your bot token
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN || '', { polling: false });

@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../../auth/[...nextauth]/route'
+ 
 import { Activity } from '@/models/Activity'
 import SystemSetting from '@/models/SystemSetting'
 import { connectToDatabase } from '@/lib/mongoose'
 import User from '@/models/User'
+import { authOptions } from '@/lib/auth'
 
 export async function GET() {
     const session : any= await getServerSession(authOptions)

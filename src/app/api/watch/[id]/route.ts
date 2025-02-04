@@ -6,7 +6,8 @@ import { Video } from '@/models/Video';
 import { VideoWatch } from '@/models/VideoWatch';
 import { Comment } from '@/models/Comment';
 import { connectToDatabase } from '@/lib/mongoose';
-import { authOptions } from '../../auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
+ 
 
 interface VideoData {
   id: string;

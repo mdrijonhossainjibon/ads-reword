@@ -3,8 +3,9 @@ import { connectToDatabase } from '@/lib/mongoose';
  
 import User from '@/models/User';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]/route';
+ 
 import { Withdrawal } from '@/models/withdrawal';
+import { authOptions } from '@/lib/auth';
  
 
 export async function POST(req: Request) {

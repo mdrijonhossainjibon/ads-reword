@@ -16,7 +16,7 @@ function* loginSaga(action: any) {
   try {
     const user = yield call(loginApi, action.payload);
     yield put(loginSuccess(user));
-  } catch (error) {
+  } catch (error : any) {
     yield put(loginFailure(error.message));
   }
 }

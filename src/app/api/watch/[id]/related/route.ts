@@ -3,7 +3,8 @@ import { NextRequest } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { Video } from '@/models/Video';
 import { connectToDatabase } from '@/lib/mongoose';
-import { authOptions } from '../../../auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
+ 
 
 export async function GET(
   request: NextRequest,

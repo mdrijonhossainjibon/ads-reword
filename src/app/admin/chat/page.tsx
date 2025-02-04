@@ -52,8 +52,8 @@ export default function AdminChatPage() {
   }, [session]);
 
   const setupWebSocket = async () => {
-    const ws = await initializeWebSocket();
-    if (ws) {
+    const ws =  initializeWebSocket();
+  /*   if (ws) {
       ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
         if (data.type === 'message') {
@@ -65,7 +65,7 @@ export default function AdminChatPage() {
           updateActiveChatsList(data);
         }
       };
-    }
+    } */
   };
 
   const updateActiveChatsList = (message: Message) => {

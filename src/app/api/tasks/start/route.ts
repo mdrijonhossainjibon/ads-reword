@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { connectToDatabase } from "@/lib/mongoose";
 import { Task, UserTask } from "@/models/Task";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
+ 
 
 export async function POST(request: Request) {
   try {

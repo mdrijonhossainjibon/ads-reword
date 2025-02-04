@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
  
 import User from '@/models/User';
-import { authOptions } from '../auth/[...nextauth]/route';
+ 
 import { connectToDatabase } from '@/lib/mongoose';
+import { authOptions } from '@/lib/auth';
  
 
 export async function GET(req: NextRequest) {

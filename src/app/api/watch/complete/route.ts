@@ -4,8 +4,9 @@ import { getServerSession } from 'next-auth';
 import { Video } from '@/models/Video';
 import { VideoWatch } from '@/models/VideoWatch';
 import { connectToDatabase } from '@/lib/mongoose';
-import { authOptions } from '../../auth/[...nextauth]/route';
+ 
 import User from '@/models/User';
+import { authOptions } from '@/lib/auth';
 
 export async function POST(request : Request) {
   try {

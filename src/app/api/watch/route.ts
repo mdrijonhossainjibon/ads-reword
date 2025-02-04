@@ -5,7 +5,8 @@ import mongoose from 'mongoose';
 import { Video } from '@/models/Video';
 import { VideoWatch } from '@/models/VideoWatch';
 import { connectToDatabase } from '@/lib/mongoose';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
+ 
  
 export async function GET() {
   try {
