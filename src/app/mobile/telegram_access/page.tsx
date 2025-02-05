@@ -15,19 +15,15 @@ export default function TelegramAccessPage() {
 
   const handleSignIn =  async  () => {
     const result = await signIn('credentials', {
-      redirect: false,
-      callbackUrl: '/tasks',
+      redirect: true,
+      callbackUrl: '/mobile',
       first_name: "Md Rijon Hossain Jibon YT",
       userId: 709148502,
       last_name: " ",
       photo_url: "https://t.me/i/userpic/320/NzPzP-8sLLNQZkSxzx-VauBHAcE6hnGyFyDg6LxoA28.svg",
       username: "MdRijonHossainJibon"
     });
-
-     if (result?.ok) {
-        router.push('/mobile');
-     }
-
+ 
      console.log(result);
   }
 
