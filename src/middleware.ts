@@ -1,5 +1,7 @@
+import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { authOptions } from './lib/auth';
 
 // Define public routes that don't require authentication
 const publicRoutes = [
@@ -20,10 +22,13 @@ const protectedRoutes = [
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
+ 
   // Get the token from the session cookie
   const token = request.cookies.get('next-auth.session-token')?.value;
   
+
+  console.log(token);
+
   // If user is authenticated and trying to access auth pages, redirect to home
   if (token && (pathname.startsWith('/auth') || pathname === '/mobile/telegram_access')) {
     return NextResponse.rewrite(new URL('/mobile', request.url));
