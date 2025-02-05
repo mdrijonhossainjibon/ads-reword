@@ -1,13 +1,16 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/mongodb';
+
 import User from '@/models/User';
 import jwt from 'jsonwebtoken';
-
+import { connectToDatabase } from '@/lib/mongoose';
+ 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 export async function POST(req: Request) {
   try {
-    await connectDB();
+
+    await connectToDatabase();
+     
     const { email, password } = await req.json();
 
     const user = await User.findOne({ email });
