@@ -6,6 +6,7 @@ import { FiMessageCircle, FiX, FiSend, FiPaperclip, FiSmile } from 'react-icons/
 import { useSession } from 'next-auth/react';
 import { initializeWebSocket, getWebSocket, disconnectWebSocket } from '@/lib/websocket';
 
+
 interface Message {
   type: 'message' | 'typing' | 'welcome';
   text: string;
@@ -15,6 +16,9 @@ interface Message {
 }
 
 export default function LiveChatButton() {
+
+ 
+
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
