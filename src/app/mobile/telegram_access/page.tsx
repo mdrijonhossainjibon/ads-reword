@@ -1,15 +1,17 @@
 "use client";
 
 
+import { useTelegramUser } from '@/hooks/useTelegramUser';
 import { QRCode } from 'antd';
 import { signIn  } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+ 
 
 
 
 export default function TelegramAccessPage() {
-  const telegramBotUrl = 'https://t.me/your_bot_username'; // Replace with your actual Telegram bot URL
-  const router = useRouter();
+  const telegramBotUrl = 'https://t.me/mdrijonhossainjibon_airdrop'; // Replace with your actual Telegram bot URL
+  
+  const { id, username, firstName, lastName, isLoaded } = useTelegramUser()
 
   
 
@@ -17,11 +19,10 @@ export default function TelegramAccessPage() {
     const result = await signIn('credentials', {
       redirect: true,
       callbackUrl: '/mobile',
-      first_name: "Md Rijon Hossain Jibon YT",
-      userId: 709148502,
-      last_name: " ",
-      photo_url: "https://t.me/i/userpic/320/NzPzP-8sLLNQZkSxzx-VauBHAcE6hnGyFyDg6LxoA28.svg",
-      username: "MdRijonHossainJibon"
+      telegramId : id,
+      username,
+      firstName,
+      lastName 
     });
  
      console.log(result);
