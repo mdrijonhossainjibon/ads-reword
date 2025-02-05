@@ -4,25 +4,25 @@
 import { useTelegramUser } from '@/hooks/useTelegramUser';
 import { QRCode } from 'antd';
 import { signIn  } from 'next-auth/react';
- 
+import { useRouter } from 'next/navigation';
 
 
 
 export default function TelegramAccessPage() {
-  const telegramBotUrl = 'https://t.me/mdrijonhossainjibon_airdrop'; // Replace with your actual Telegram bot URL
-  
-  const { id, username, firstName, lastName, isLoaded } = useTelegramUser()
+  const telegramBotUrl = 'https://t.me/your_bot_username'; // Replace with your actual Telegram bot URL
+  const router = useRouter();
 
-  
+  const { id, username, firstName, lastName, isLoaded } = useTelegramUser();
+
 
   const handleSignIn =  async  () => {
     const result = await signIn('credentials', {
       redirect: true,
       callbackUrl: '/mobile',
-      telegramId : id,
-      username,
-      firstName,
-      lastName 
+      first_name : firstName,
+      userId:  id ,
+      last_name: lastName,
+      username 
     });
  
      console.log(result);
