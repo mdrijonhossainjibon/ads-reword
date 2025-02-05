@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from 'react';
 
 
@@ -24,7 +26,7 @@ export function useTelegramUser() {
         
         if (webApp) {
             // Ensure the WebApp is ready
-            //webApp.ready();
+             webApp.ready();
             
             const tgUser = webApp.initDataUnsafe?.user;
             if (tgUser) {
