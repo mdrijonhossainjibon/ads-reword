@@ -27,6 +27,8 @@ export default function TelegramAccessPage() {
      if (result?.ok) {
         router.push('/mobile');
      }
+
+     console.log(result);
   }
 
 
