@@ -22,15 +22,12 @@ export default function MobilePage() {
         }
 
         console.log(window.Telegram?.WebApp.initDataUnsafe);
-    }, [router]);
+    }, [router , /* window.Telegram?.WebApp */ ]);
 
      
     return (
         <>
-            <Script
-                src="https://telegram.org/js/telegram-web-app.js"
-                strategy="beforeInteractive"
-            />
+           
             <div className="m-0 p-0 bg-gradient-to-br from-gray-900 to-black text-white font-sans min-h-screen">
                 <Header />
 

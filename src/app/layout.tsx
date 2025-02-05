@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 
 import dynamic from 'next/dynamic';
 import { WrapperProvider } from './WrapperProvider';
+import Script from 'next/script';
 
 
 const inter = Inter({ subsets: ['latin'] });
@@ -16,11 +17,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode; }) {
 
-  
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         < WrapperProvider>
+          <Script
+            src="https://telegram.org/js/telegram-web-app.js"
+            strategy="beforeInteractive"
+          />
           <main className="pt-16">
             {children}
           </main>

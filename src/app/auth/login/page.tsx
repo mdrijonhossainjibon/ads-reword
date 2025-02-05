@@ -58,6 +58,9 @@ export default function AdminLogin() {
         email,
         password,
         redirect: false,
+        initData : {
+          t : ''
+        },
         callbackUrl: '/tasks'
       });
 

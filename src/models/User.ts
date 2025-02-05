@@ -13,16 +13,19 @@ export interface Task {
 
 export interface IUser extends Document {
   googleId?: string;
+  telegramId?: string;
   username: string;
-  email: string;
+  email?: string;
   password?: string;
+  firstName?: string;
+  lastName?: string;
+  photoUrl?: string;
   role: 'user' | 'admin';
   balance: number;
   watchedAds: number;
   earnedPoints: number;
   dailyLimit: number;
   tasks: Task[];
-   
   totalEarned: number;
   createdAt: Date;
   updatedAt: Date;
@@ -32,9 +35,13 @@ export interface IUser extends Document {
 const userSchema = new Schema<IUser>(
   {
     googleId: { type: String, sparse: true, unique: true },
+    telegramId: { type: String, sparse: true, unique: true },
     username: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    email: { type: String, sparse: true, unique: true },
     password: { type: String },
+    firstName: { type: String },
+    lastName: { type: String },
+    photoUrl: { type: String },
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
     balance: { type: Number, default: 0 },
     watchedAds: { type: Number, default: 0 },

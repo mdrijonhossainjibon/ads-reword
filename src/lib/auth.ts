@@ -3,10 +3,10 @@ import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
-import { JWT } from "next-auth/jwt";
+ 
 import User from "@/models/User";
 import { connectToDatabase } from "@/lib/mongoose";
-import type { Account } from "next-auth";
+ 
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -14,18 +14,56 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
+    GitHubProvider ({
+      clientId: process.env.GITHUB_CLIENT_ID || "",
+      clientSecret: process.env.GITHUB_CLIENT_SECRET || ""
+    }),
     CredentialsProvider({
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
+        username: { label: "Username", type: "text" },
+        userId: { label: "UserId", type: "text" },
+        first_name : { label: "First Name", type: "text" },
+        photo_url : { label: "Photo URL", type: "text" },
+    
       },
       async authorize(credentials) {
+
+       
+
+        await connectToDatabase();
+
+        if(credentials?.userId && credentials?.username) {
+          // Handle Telegram login
+          let telegramUser = await User.findOne({ telegramId: credentials.userId });
+          
+ 
+          if (!telegramUser) {
+            // Create new user if not exists
+            telegramUser = await User.create({
+              telegramId: credentials.userId,
+              username: credentials.username,
+              firstName: credentials.first_name,
+              photoUrl: credentials.photo_url,
+              role: 'user'
+            });
+          }
+
+          return {
+            id: telegramUser._id.toString(),
+            username: telegramUser.username,
+            role: telegramUser.role,
+            telegramId: telegramUser.telegramId
+          };
+        }
+
+        // Handle regular email/password login
         if (!credentials?.email || !credentials?.password) {
           throw new Error('Invalid credentials');
         }
 
-        await connectToDatabase();
         const user = await User.findOne({ email: credentials.email });
 
         if (!user || !user?.password) {
@@ -47,7 +85,8 @@ export const authOptions: NextAuthOptions = {
           role: user.role,
         };
       }
-    })
+    }),
+    
   ],
   pages: {
     signIn: "/admin/login",
@@ -59,17 +98,27 @@ export const authOptions: NextAuthOptions = {
       }
       return !!user;
     },
-    async jwt({ token, user : any, account }) {
-     /*  if (user) {
+    async jwt({ token, user  , account } : any) {
+      if (user) {
         token.id = user.id;
         token.role = user.role;
-      } */
+        token.email = user.email;
+        token.username = user.username;
+        token.telegramId = user.telegramId;
+        token.firstName = user.firstName;
+        token.photoUrl = user.photoUrl;
+      }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token } : any) {
       if (session?.user) {
-        ///session.user.id = token.id;
-        //session.user.role = token.role;
+          session.user.id = token.id;
+         session.user.role = token.role;
+         session.user.email = token.email;
+         session.user.username = token.username;
+         session.user.telegramId = token.telegramId;
+         session.user.firstName = token.firstName;
+         session.user.photoUrl = token.photoUrl;
       }
       return session;
     },
