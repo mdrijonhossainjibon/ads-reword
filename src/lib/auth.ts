@@ -89,7 +89,7 @@ export const authOptions: NextAuthOptions = {
     
   ],
   pages: {
-    signIn: "/admin/login",
+    signIn: "/auth/login",
   },
   callbacks: {
     async signIn({ user, account, profile }) {

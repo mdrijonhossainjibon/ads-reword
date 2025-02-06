@@ -17,7 +17,7 @@ export default function TelegramAccessPage() {
 
   const handleSignIn =  async  () => {
     const result = await signIn('credentials', {
-      redirect: true,
+      redirect: false,
       callbackUrl: '/mobile',
       first_name : firstName,
       userId:  id ,

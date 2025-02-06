@@ -1,61 +1,57 @@
-import { getServerSession } from 'next-auth';
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-import { authOptions } from './lib/auth';
+// middleware.ts
+import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
 
 // Define public routes that don't require authentication
 const publicRoutes = [
-  '/mobile/telegram_access',
-  '/auth/login',
-  '/auth/register',
   '/',
+  '/auth/signin',
+  '/auth/signup',
+  '/api/auth/.*',
+  '/mobile/telegram_access'
 ];
 
-// Define routes that require authentication
-const protectedRoutes = [
-  '/mobile/tasks',
-  '/mobile/watch',
-  '/mobile/withdraw',
-  '/admin',
-  '/mobile'
-];
 
-export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
- 
-  // Get the token from the session cookie
-  const token = request.cookies.get('next-auth.session-token')?.value;
-  
 
-  console.log(token);
+const PUBLIC_ROUTES = ["/", "/about", "/contact", "/auth/signin"];
 
-  // If user is authenticated and trying to access auth pages, redirect to home
-  if (token && (pathname.startsWith('/auth') || pathname === '/mobile/telegram_access')) {
-    return NextResponse.rewrite(new URL('/mobile', request.url));
-  }
 
-  // For protected routes, check authentication
-  if (protectedRoutes.some(route => pathname.startsWith(route))) {
-    if (!token) {
-      const callbackUrl = encodeURIComponent(pathname);
-      return NextResponse.rewrite(new URL(`/mobile/telegram_access?callbackUrl=${callbackUrl}`, request.url));
+export default withAuth(
+  function middleware(req) {
+
+    const { pathname } = req.nextUrl;
+
+    // Check if the route is public
+    const isPublicRoute = PUBLIC_ROUTES.some((route) => pathname.startsWith(route));
+
+    console.log(req.nextauth.token);
+
+    // If it's a public route, allow access
+    if (isPublicRoute) {
+      return NextResponse.next();
     }
 
-    // For admin routes, we'll need to verify the role through an API call or JWT payload
-    if (pathname.startsWith('/admin')) {
-      // Since we can't verify role in middleware directly, redirect to a page that can check
-      const response = NextResponse.next();
-      response.headers.set('x-middleware-admin-check', 'true');
-      return response;
+    // If not authenticated, redirect to sign-in
+    if (!req.nextauth.token) {
+      return NextResponse.rewrite(new URL("/auth/signin", req.url));
     }
+
+
+  // If authenticated, allow access
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => {
+        // Only allow if the user is authenticated
+      
+        return !!token;
+      },
+    },
   }
+);
 
-  return NextResponse.next();
-}
-
+// Define routes configuration
 export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|_next/data|favicon.ico|public|assets).*)',
-    '/api/auth/:path*'
-  ]
+  matcher: ["/admin/dashboard/:path*", "/profile/:path*" , "/mobile/:path*"], // Protected routes
 };
