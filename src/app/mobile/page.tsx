@@ -10,20 +10,26 @@ import WatchAdButton from './components/WatchAdButton'
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react'
 import { useTelegramUser } from '@/hooks/useTelegramUser';
+import { useSession } from 'next-auth/react';
 
 export default function MobilePage() {
     const router = useRouter();
     const user = useTelegramUser();
+    const {  status } = useSession();
+
+     if(status === 'unauthenticated') {
+         router.push('/mobile/telegram_access');
+     }
+
 
     useEffect(() => {
         // Only redirect if we're not in Telegram WebApp context
         if (!window.Telegram?.WebApp) {
             router.push('/mobile/telegram');
         }
-
-        console.log(window.Telegram?.WebApp.initDataUnsafe);
     }, [router , /* window.Telegram?.WebApp */ ]);
 
+ 
      
     return (
         <>

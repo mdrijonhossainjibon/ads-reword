@@ -17,6 +17,9 @@ export default function AdminLogin() {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const router = useRouter();
 
+  
+
+
   useEffect(() => {
     // Check for saved credentials
     const savedEmail = localStorage.getItem('adminEmail');
@@ -25,6 +28,16 @@ export default function AdminLogin() {
       setRememberMe(true);
     }
   }, []);
+
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await signIn('google' , {   });
+   
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -57,11 +70,7 @@ export default function AdminLogin() {
       const result = await signIn('credentials', {
         email,
         password,
-        redirect: false,
-        initData : {
-          t : ''
-        },
-        callbackUrl: '/tasks'
+        redirect: false
       });
 
       if (result?.error) {
@@ -254,7 +263,7 @@ export default function AdminLogin() {
 
           <div className="mt-6 space-y-3">
             <button
-              onClick={() => signIn('google', { callbackUrl: '/admin/dashboard' })}
+              onClick={ handleGoogleSignIn  } 
               className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150"
             >
               <FcGoogle className="h-5 w-5" />

@@ -26,6 +26,10 @@ export default function TelegramAccessPage() {
     });
  
      console.log(result);
+
+     if (result?.ok) {
+      router.push(result?.url as any );
+     }
   }
 
 
