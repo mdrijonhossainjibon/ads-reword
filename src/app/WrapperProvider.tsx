@@ -26,7 +26,7 @@ export const WrapperProvider = ({ children }: { children: React.ReactNode; }) =>
  console.log(osName)
 
  useEffect(() => {
-    if (isMobile) {
+    if (isMobile && isMobileOnly  && (osName === 'iOS' ||   osName === 'android')) {
       router.push('/mobile');
     }
   }, [   isMobile  , router ]);
