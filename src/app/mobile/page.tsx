@@ -40,7 +40,7 @@ export default function MobilePage() {
                 <Header />
 
                 <div className="container mx-auto px-4 py-4 flex flex-col items-center justify-start min-h-screen pt-20 pb-24">
-                    {user.isLoaded ? (
+                    {user.isLoaded   ? (
                         <>
                             <UserStats />
                             <DailyProgress />

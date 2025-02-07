@@ -5,9 +5,8 @@ import Navbar from '@/components/layout/Navbar';
 import SessionWrapper from '@/components/NextAuthProvider';
 import { Redux_Provaider } from '@/modules/Redux_Provaide';
 import dynamic from 'next/dynamic';
-import { isMobile } from 'mobile-device-detect';
- 
-import { useSession } from 'next-auth/react';
+import { isMobile, isMobileOnly, mobileModel, mobileVendor, osName ,  } from 'mobile-device-detect';
+  
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
  
@@ -24,7 +23,7 @@ export const WrapperProvider = ({ children }: { children: React.ReactNode; }) =>
    
    const router = useRouter();
  
- 
+ console.log(osName)
 
  useEffect(() => {
     if (isMobile) {
