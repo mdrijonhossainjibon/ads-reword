@@ -41,14 +41,7 @@ export const authOptions: NextAuthOptions = {
           
  
           if (!telegramUser) {
-            // Create new user if not exists
-            telegramUser = await User.create({
-              telegramId: credentials.userId,
-              username: credentials.username,
-              firstName: credentials.first_name,
-              photoUrl: credentials.photo_url,
-              role: 'user'
-            });
+            throw new Error('Error Not Found account');
           }
 
           return {

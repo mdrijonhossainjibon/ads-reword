@@ -12,7 +12,6 @@ export interface Task {
 }
 
 export interface IUser extends Document {
-  googleId?: string;
   telegramId?: string;
   username: string;
   email?: string;
@@ -34,14 +33,14 @@ export interface IUser extends Document {
 
 const userSchema = new Schema<IUser>(
   {
-    googleId: { type: String, sparse: true, unique: true },
+   
     telegramId: { type: String, sparse: true, unique: true },
     username: { type: String, required: true },
-    email: { type: String, sparse: true, unique: true },
-    password: { type: String },
-    firstName: { type: String },
-    lastName: { type: String },
-    photoUrl: { type: String },
+    email: { type: String, sparse: true },
+    password: { type: String  , default : null},
+    firstName: { type: String  , default : null},
+    lastName: { type: String , default : null},
+    photoUrl: { type: String  , default : null},
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
     balance: { type: Number, default: 0 },
     watchedAds: { type: Number, default: 0 },

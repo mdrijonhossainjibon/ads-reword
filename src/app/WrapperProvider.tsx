@@ -7,6 +7,10 @@ import { Redux_Provaider } from '@/modules/Redux_Provaide';
 import dynamic from 'next/dynamic';
 import { isMobile } from 'mobile-device-detect';
  
+import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+ 
 
 
 
@@ -18,7 +22,16 @@ const LiveChatButton = dynamic(() => import('@/components/LiveChatButton'), {
 
 export const WrapperProvider = ({ children }: { children: React.ReactNode; }) => {
    
+   const router = useRouter();
  
+ 
+
+ useEffect(() => {
+    if (isMobile) {
+      router.push('/mobile');
+    }
+  }, [   isMobile  , router ]);
+
     return (
         <Redux_Provaider>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
