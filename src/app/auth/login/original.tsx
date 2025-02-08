@@ -19,7 +19,7 @@ export default function authLoginPAGE() {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const router = useRouter();
 
-  const {  status } = useSession();
+  const {  data : session, status } = useSession();
   
 
 
@@ -34,6 +34,9 @@ export default function authLoginPAGE() {
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || '';
+
+
+  console.log(session);
    
 
   useEffect(() =>{
@@ -51,6 +54,8 @@ export default function authLoginPAGE() {
       console.error(error);
     }
   };
+
+  
 
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

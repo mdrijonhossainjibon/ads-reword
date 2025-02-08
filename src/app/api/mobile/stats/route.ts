@@ -11,10 +11,15 @@ export async function GET() {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
  
-    await connectToDatabase()
-  
+   
+
+  await connectToDatabase()
+ 
+
     try {
-        const user = await User.findOne({   _id : session.user?.id })
+        const user = await User.findOne({ 
+           $or : [{ email: session.user?.email }, { telegramId: session.user?.telegramId }]
+        })
 
         if (!user) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 })
