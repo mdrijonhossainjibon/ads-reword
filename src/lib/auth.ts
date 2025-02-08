@@ -34,30 +34,14 @@ export const authOptions: NextAuthOptions = {
        
 
         await connectToDatabase();
-
-        if(credentials?.userId && credentials?.username) {
-          // Handle Telegram login
-          let telegramUser = await User.findOne({ telegramId: credentials.userId });
-          
  
-          if (!telegramUser) {
-            throw new Error('Error Not Found account');
-          }
-
-          return {
-            id: telegramUser._id.toString(),
-            username: telegramUser.username,
-            role: telegramUser.role,
-            telegramId: telegramUser.telegramId
-          };
-        }
 
         // Handle regular email/password login
         if (!credentials?.email || !credentials?.password) {
           throw new Error('Invalid credentials');
         }
 
-        const user = await User.findOne({ email: credentials.email });
+        const user = await User.findOne({ $or : [ { email: credentials.email }, { telegramId: credentials.userId } ] });
 
         if (!user || !user?.password) {
           throw new Error('Invalid credentials');
@@ -76,6 +60,8 @@ export const authOptions: NextAuthOptions = {
           id: user._id,
           email: user.email,
           role: user.role,
+          username : user.username,
+          telegramId : user.telegramId
         };
       }
     }),
