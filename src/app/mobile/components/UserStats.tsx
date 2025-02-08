@@ -9,6 +9,9 @@ export default function UserStats() {
     if (error) return <div>Error: {error}</div>
     if (!stats) return null
 
+
+    console.log(stats);
+
     return (
         <div className="w-full max-w-md bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 mb-6">
             <div className="flex items-center gap-4 mb-6">

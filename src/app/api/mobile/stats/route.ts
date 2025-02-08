@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
- 
+import User from '@/models/User'
+import { connectToDatabase } from '@/lib/mongoose'
 
 export async function GET() {
     const session = await getServerSession(authOptions)
@@ -9,17 +10,22 @@ export async function GET() {
     if (!session) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
-
+ 
+    await connectToDatabase()
+  
     try {
-        // TODO: Get actual user stats from database
-        const userStats = {
-            username: session.user?.name || 'User',
-            watchedAds: 150,
-            earnedPoints: 75.00
+        const user = await User.findOne({   _id : session.user?.id })
+
+        if (!user) {
+            return NextResponse.json({ error: 'User not found' }, { status: 404 })
         }
 
-        return NextResponse.json(userStats)
+        
+
+         
+        return NextResponse.json(user)
     } catch (error) {
+        console.error('Error fetching user stats:', error)
         return NextResponse.json({ error: 'Failed to fetch user stats' }, { status: 500 })
     }
 }

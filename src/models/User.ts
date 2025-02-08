@@ -24,7 +24,6 @@ export interface IUser extends Document {
   watchedAds: number;
   earnedPoints: number;
   dailyLimit: number;
-  tasks: Task[];
   totalEarned: number;
   createdAt: Date;
   updatedAt: Date;
@@ -47,15 +46,7 @@ const userSchema = new Schema<IUser>(
     earnedPoints: { type: Number, default: 0 },
     dailyLimit: { type: Number, default: 10 },
     totalEarned: { type: Number, default: 0 },
-    tasks: [{
-      id: String,
-      title: String,
-      description: String,
-      reward: Number,
-      completed: Boolean,
-      createdAt: Date,
-      completedAt: Date
-    }]
+  
   },
   {
     timestamps: true

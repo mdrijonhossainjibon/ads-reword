@@ -18,7 +18,7 @@ export async function GET() {
         await connectToDatabase()
 
         // Find the user by their Google ID
-        const user = await User.findOne({ email: session.user?.email })
+        const user = await User.findOne({ _id : session.user?.id })
         if (!user) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 })
         }

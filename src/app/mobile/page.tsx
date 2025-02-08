@@ -10,7 +10,7 @@ import LoadingSpinner from './components/LoadingSpinner'
 import { useRouter } from 'next/navigation';
  
 import { useTelegramUser } from '@/hooks/useTelegramUser';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
  
 export default function MobilePage() {
     const router = useRouter();
@@ -26,7 +26,8 @@ export default function MobilePage() {
   
     return (
         <>
-           
+            <button onClick={() => signOut ()}>Sind </button>
+
             <div className="m-0 p-0 bg-gradient-to-br from-gray-900 to-black text-white font-sans min-h-screen">
                 <Header />
 
@@ -40,9 +41,9 @@ export default function MobilePage() {
                         </>
                     
                 </div>
-
+    
                 <BottomNavigation />
             </div>
         </>
     );
-}
+} 
