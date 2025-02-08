@@ -15,6 +15,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+     
+
     const { taskId } = await request.json();
 
     const task = await Task.findById(taskId);
@@ -82,7 +84,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(responseData);
   } catch (error) {
-    ///console.error("Error starting task:", error);
+    console.error("Error starting task:", error);
     return NextResponse.json(
       { error: "Failed to start task" },
       { status: 500 }

@@ -237,57 +237,11 @@ export default function TasksPage() {
     totalTasksAvailable: 25,
     totalPointsEarned: 1500
   });
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      id: '1',
-      type: 'ad',
-      title: 'Watch Premium Ad',
-      description: 'Watch a 30-second premium advertisement to earn points',
-      points: 50,
-      status: 'available',
-      completedCount: 3,
-      maxCount: 10,
-      timeLeft: 14400 // 4 hours in seconds
-    },
-    {
-      id: '679f5ca80d0d0cbcffc1d791',
-      type: 'subscription',
-      title: 'Subscribe to Channel',
-      description: 'Subscribe to our partner YouTube channel',
-      points: 200,
-      status: 'available',
-      platform: 'YouTube'
-    },
-    {
-      id: '3',
-      type: 'social',
-      title: 'Join Telegram Group',
-      description: 'Join our Telegram community group',
-      points: 150,
-      status: 'completed'
-    },
-    {
-      id: '4',
-      type: 'promotion',
-      title: 'Share App',
-      description: 'Share our app with your friends on social media',
-      points: 100,
-      status: 'available'
-    },
-    {
-      id: '5',
-      type: 'ad',
-      title: 'Watch App Promo',
-      description: 'Watch a featured app promotional video',
-      points: 75,
-      status: 'locked',
-      timeLeft: 3600 // 1 hour in seconds
-    }
-  ]);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
     setIsLoading(false);
-    /* const fetchTasks = async () => {
+    const fetchTasks = async () => {
       try {
         const response = await axios.get('/api/tasks');
         if (response.data.success) {
@@ -301,7 +255,7 @@ export default function TasksPage() {
       }
     };
 
-    fetchTasks(); */
+    fetchTasks();
   }, []);
 
   if (isLoading) {

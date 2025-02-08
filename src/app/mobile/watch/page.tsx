@@ -37,42 +37,49 @@ const VideoItem: FC<{ video: Video , router : Router }> = ({ video , router}) =>
   
   return (
     <div className="video-item" data-video-id={video.id}>
-      <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 cursor-pointer hover:bg-gray-700/50 transition-colors">
-        <div className="flex gap-4">
-          <div className="relative w-32 h-20 rounded-lg overflow-hidden flex-shrink-0">
-            <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover"/>
-            <div className="absolute bottom-1 right-1 bg-black/80 text-xs px-1 rounded">
-              {video.duration}
-            </div>
+      <div onClick={watchVideo} className="bg-gray-800/30 rounded-lg overflow-hidden cursor-pointer">
+        <div className="relative">
+          <img src={video.thumbnail} alt={video.title} className="w-full aspect-video object-cover"/>
+          <div className="absolute bottom-1 right-1 bg-black/80 text-[10px] px-1.5 py-0.5 rounded text-white font-medium">
+            {video.duration}
           </div>
-          <div className="flex-1">
-            <h4 className="font-medium text-white line-clamp-2">{video.title}</h4>
-            <div className="flex items-center justify-between mt-2">
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <span className="text-purple-400">+{video.points} points</span>
+        </div>
+        <div className="p-2">
+          <div className="flex items-start gap-2">
+            <div className="flex-1 min-w-0">
+              <h4 className="text-white text-sm font-medium line-clamp-2 leading-snug mb-1">
+                {video.title}
+              </h4>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  <span className="text-purple-400 text-xs">+{video.points}</span>
+                </div>
+                {!video.watched && (
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      watchVideo();
+                    }}
+                    className="flex items-center gap-1 bg-blue-500 text-white text-xs px-2 py-0.5 rounded"
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                    </svg>
+                    Watch Now
+                  </button>
+                )}
+                {video.watched && (
+                  <span className="text-green-400 text-xs flex items-center gap-1">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Watched
+                  </span>
+                )}
               </div>
-              {video.watched ? (
-                <span className="text-green-400 flex items-center gap-1">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                  </svg>
-                  Watched
-                </span>
-              ) : (
-                <button 
-                  onClick={watchVideo}
-                  className="text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                  </svg>
-                  Watch Now
-                </button>
-              )}
             </div>
           </div>
         </div>
@@ -242,7 +249,3 @@ export default function WatchPage() {
     </div>
   );
 }
-
-
-
- 

@@ -14,8 +14,29 @@ import { userSaga } from './private/user/saga';
 
 import { tasksSaga } from './private/tasks/saga';
 import { withdrawSaga } from './private/withdraw/saga';
-import { privateReducer } from './private';
+ 
 import { watchSaga } from './private/watch/saga';
+import { telegramReducer } from './private/telegram';
+import { userReducer } from './private/user/reducer';
+import { withdrawReducer } from './private/withdraw';
+import { tasksReducer } from './private/tasks/reducer';
+import { watchReducer } from './private/watch/reducer';
+ 
+  
+
+
+
+export const privateReducer =  combineReducers({
+  telegram : telegramReducer, 
+  user: userReducer,
+  withdraw: withdrawReducer,
+  tasks: tasksReducer,
+  watch: watchReducer
+})
+
+
+
+
 
 export const rootReducer = combineReducers({
   public: publicReducer,

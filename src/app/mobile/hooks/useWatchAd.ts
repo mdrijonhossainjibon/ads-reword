@@ -1,35 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { watchAdRequest } from '@/modules/private/tasks/reducer'
+import { selectTasksLoading, selectTasksError } from '@/modules/private/tasks/selectors'
 
-interface WatchAdResult {
-    success: boolean
-    pointsEarned: number
-    newTotal: number
-    message: string
-}
-
+ 
 export function useWatchAd() {
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState<string | null>(null)
+    const dispatch = useDispatch()
+    const loading = useSelector(selectTasksLoading)
+    const error = useSelector(selectTasksError)
 
-    const watchAd = async (): Promise<WatchAdResult | null> => {
-        setLoading(true)
-        setError(null)
-
-        try {
-            const response = await fetch('/api/mobile/watch-ad', {
-                method: 'POST',
-            })
-            if (!response.ok) throw new Error('Failed to process ad watch')
-            const data = await response.json()
-            return data
-        } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to watch ad')
-            return null
-        } finally {
-            setLoading(false)
-        }
+    const watchAd = async (): Promise<void> => {
+        dispatch(watchAdRequest())
     }
 
     return { watchAd, loading, error }
