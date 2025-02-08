@@ -26,14 +26,15 @@ export default function TelegramAccessPage() {
   } ,[ callbackUrl  , router , status ])
 
 
+  console.log(id , username , firstName , lastName , isLoaded);
 
 
   const handleSignIn =  async  () => {
     const result = await signIn('credentials', {
       redirect: false,
       callbackUrl ,
-      userId:  id ,
-      username 
+      userId:  "709148502" ,
+      username : "MdRijonHossainJibon"
     });
 
     console.log(result);
