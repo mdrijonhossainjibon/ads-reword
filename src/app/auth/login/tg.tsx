@@ -13,7 +13,7 @@ export default function TelegramAccessPage() {
   const telegramBotUrl = 'https://t.me/your_bot_username'; // Replace with your actual Telegram bot URL
   const router = useRouter();
   const { status } = useSession();
-  const { id, username, firstName, lastName, isLoaded } = useTelegramUser();
+  const { id, username , isLoaded } = useTelegramUser();
 
   
   const searchParams = useSearchParams();
@@ -32,8 +32,8 @@ export default function TelegramAccessPage() {
     const result = await signIn('credentials', {
       redirect: false,
       callbackUrl ,
-      userId:  "709148502" ,
-      username  : "MdRijonHossainJibon"
+      userId:  id?.toString(),
+      username 
     });
   
   }

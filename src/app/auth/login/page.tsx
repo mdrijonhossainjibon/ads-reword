@@ -1,6 +1,7 @@
  "use client";
 
 import LoadingSpinner from "@/app/mobile/components/LoadingSpinner";
+import { useTelegramUser } from "@/hooks/useTelegramUser";
 import { isMobileOnly } from "mobile-device-detect";
 import dynamic from "next/dynamic";
 
@@ -15,6 +16,10 @@ const AuthLoginPage = dynamic(() => import("./original"), {
 });
 
 export default function AuthPage() {
+
+  const {   isLoaded } = useTelegramUser();
+
+
  
-  return isMobileOnly ? <TelegramAccessPage /> : <AuthLoginPage />;
+  return isMobileOnly &&  isLoaded ? <TelegramAccessPage /> : <AuthLoginPage />;
 }
