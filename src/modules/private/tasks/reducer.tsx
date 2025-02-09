@@ -1,86 +1,36 @@
-interface Task {
-  id: string;
-  title: string;
-  completed: boolean;
-}
+import { FETCH_TASKS_FAILURE, FETCH_TASKS_REQUEST, FETCH_TASKS_SUCCESS, WATCH_AD_FAILURE, WATCH_AD_REQUEST, WATCH_AD_SUCCESS } from "./constants";
+import {  TasksState } from "./types";
 
-interface TasksState {
-  loading: boolean;
-  error: string | null;
-  tasks: Task[];
-}
 
 const initialState: TasksState = {
   loading: false,
   error: null,
   tasks: [],
+  stats : {
+    totalPoints : 0,
+    completedTasks : 0
+  }
 };
-
-// Action Types
-export const FETCH_TASKS_REQUEST = 'FETCH_TASKS_REQUEST';
-export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS';
-export const FETCH_TASKS_FAILURE = 'FETCH_TASKS_FAILURE';
-export const WATCH_AD_REQUEST = 'WATCH_AD_REQUEST';
-export const WATCH_AD_SUCCESS = 'WATCH_AD_SUCCESS';
-export const WATCH_AD_FAILURE = 'WATCH_AD_FAILURE';
+ 
 
 // Action Creators
-export const fetchTasksRequest = () => ({
-  type: FETCH_TASKS_REQUEST,
-});
 
-export const fetchTasksSuccess = (tasks: Task[]) => ({
-  type: FETCH_TASKS_SUCCESS,
-  payload: tasks,
-});
-
-export const fetchTasksFailure = (error: string) => ({
-  type: FETCH_TASKS_FAILURE,
-  payload: error,
-});
-
-export const watchAdRequest = () => ({
-  type: WATCH_AD_REQUEST,
-});
-
-export const watchAdSuccess = (result: any) => ({
-  type: WATCH_AD_SUCCESS,
-  payload: result,
-});
-
-export const watchAdFailure = (error: string) => ({
-  type: WATCH_AD_FAILURE,
-  payload: error,
-});
 
 // Reducer
-export const tasksReducer = (state = initialState, action: any): TasksState => {
+export const tasksReducer = (state = initialState, action:  any): TasksState => {
   switch (action.type) {
     case FETCH_TASKS_REQUEST:
-    case WATCH_AD_REQUEST:
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
+      return { ...state, loading: true, error: null };
     case FETCH_TASKS_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        tasks: action.payload,
-      };
-    case WATCH_AD_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-      };
+      return { ...state, loading: false, tasks: action.payload.tasks , stats: action.payload.stats };
     case FETCH_TASKS_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    case WATCH_AD_REQUEST:
+      return { ...state, loading: true, error: null };
+    case WATCH_AD_SUCCESS:
+      return { ...state, loading: false, tasks: action.payload };
     case WATCH_AD_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }

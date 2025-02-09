@@ -16,6 +16,12 @@ export const api = {
     return response.data;
   },
 
+  async getTasks (){
+    const response = await axiosClient.get('/tasks');
+    return response.data;
+  }
+,
+
   /**
    * Create a new withdrawal request
    * @param amount

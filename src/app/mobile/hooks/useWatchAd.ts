@@ -1,8 +1,9 @@
 'use client'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { watchAdRequest } from '@/modules/private/tasks/reducer'
+
 import { selectTasksLoading, selectTasksError } from '@/modules/private/tasks/selectors'
+import { watchAdRequest } from '@/modules/private/tasks/actions'
 
  
 export function useWatchAd() {

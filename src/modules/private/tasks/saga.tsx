@@ -1,54 +1,16 @@
-"use client";
+import { call, put, takeLatest } from "redux-saga/effects";
+ 
+import { api } from "@/lib/client/api";
+import { FETCH_TASKS_REQUEST } from "./constants";
+import { fetchTasksSuccess } from "./actions";
 
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { 
-  fetchTasksRequest, 
-  fetchTasksSuccess, 
-  fetchTasksFailure,
-  WATCH_AD_REQUEST,
-  watchAdSuccess,
-  watchAdFailure
-} from './reducer';
+ function *  fetchTasksSaga  ()  {
+   const response = yield call(api.getTasks );
 
-interface WatchAdResult {
-  success: boolean;
-  pointsEarned: number;
-  newTotal: number;
-  message: string;
-}
-
-function* fetchTasksSaga() {
-  try {
-    // Replace this with your actual API call
-      const response = yield call(fetch, '/api/mobile/tasks');
-     yield put(fetchTasksSuccess(response.data));
-  } catch (error) {
-    if (error instanceof Error) {
-      yield put(fetchTasksFailure(error.message));
-    } else {
-      yield put(fetchTasksFailure('An unknown error occurred'));
-    }
-  }
-}
-
-function* watchAdSaga() {
-  try {
-    const response: Response = yield call(fetch, '/api/mobile/watch-ad', {
-      method: 'POST',
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to process ad watch');
-    }
-
-    const data: WatchAdResult = yield response.json();
-    yield put(watchAdSuccess(data));
-  } catch (error) {
-    yield put(watchAdFailure(error instanceof Error ? error.message : 'Failed to watch ad'));
-  }
+   console.log(response.data);
+   yield  put(fetchTasksSuccess(response.data));
 }
 
 export function* tasksSaga() {
-  yield takeLatest(fetchTasksRequest , fetchTasksSaga);
-  yield takeLatest(WATCH_AD_REQUEST, watchAdSaga);
+  yield takeLatest(FETCH_TASKS_REQUEST, fetchTasksSaga);
 }
