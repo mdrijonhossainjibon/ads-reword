@@ -6,7 +6,7 @@ import { compare } from "bcrypt";
 
 import User from "@/models/User";
 import { connectToDatabase } from "@/lib/mongoose";
-import { console } from "inspector";
+ 
 
 
 export const authOptions: NextAuthOptions = {
@@ -33,6 +33,8 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
 
 
+        
+         
 
         await connectToDatabase();
 
@@ -54,13 +56,9 @@ export const authOptions: NextAuthOptions = {
           }
         }
 
-
-
-
+ 
         const user = await User.findOne({ email: credentials?.email });
-
-
-
+ 
         if (!user || !user?.password) {
           throw new Error('Invalid credentials');
         }
@@ -94,13 +92,26 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async signIn({ user, account, profile }) {
+      let isAllowed = false;
       if (account?.provider === "credentials") {
         return true;
       }
-      return !!user;
+
+      if(account?.provider === 'google'){
+        const user = await User.findOne({ email: profile?.email });
+        isAllowed = !!user;
+      }
+
+      if(account?.provider === 'github'){
+        const user = await User.findOne({ email: profile?.email });
+        isAllowed = !!user;
+      }
+       
+      return  isAllowed;
     },
     async jwt({ token, user, account }: any) {
-
+ 
+ 
 
       if (user) {
         token.id = user.id;

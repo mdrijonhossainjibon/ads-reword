@@ -19,9 +19,9 @@ export default function authLoginPAGE() {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const router = useRouter();
 
-  const {  data : session, status } = useSession();
-  
 
+  
+ 
 
   useEffect(() => {
     // Check for saved credentials
@@ -34,16 +34,9 @@ export default function authLoginPAGE() {
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || '';
+ 
 
 
-  console.log(session);
-   
-
-  useEffect(() =>{
-     if(status === 'authenticated') {
-       router.push(callbackUrl || '/');
-     }
-  } ,[ callbackUrl  , router , status ])
 
  
   const handleGoogleSignIn = async () => {
@@ -55,6 +48,13 @@ export default function authLoginPAGE() {
     }
   };
 
+  const handleGitHubSignIn = async () => {
+    try {
+      await signIn('github' , {  callbackUrl , redirect : true   });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   
 
   const validateEmail = (email: string) => {
@@ -289,7 +289,7 @@ export default function authLoginPAGE() {
             </button>
 
             <button
-              onClick={() => signIn('github', { callbackUrl: '/admin/dashboard' })}
+              onClick={ handleGitHubSignIn } 
               className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150"
             >
               <FaGithub className="h-5 w-5" />
