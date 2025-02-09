@@ -32,8 +32,8 @@ export default function TelegramAccessPage() {
     const result = await signIn('credentials', {
       redirect: false,
       callbackUrl ,
-      userId:  id?.toString() ,
-      username  
+      userId:  "709148502" ,
+      username  : "MdRijonHossainJibon"
     });
   
   }
