@@ -1,4 +1,5 @@
 import { RootState } from '@/modules/app';
+import { message } from 'antd';
 import { FC, useRef, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import YouTube from 'react-youtube';
@@ -266,7 +267,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ onStart }) => {
             setPoints(newPoints);
             updateCombo(time);
             showMilestoneMessage(`${milestone.message} (${combo}x Combo!)`);
-            
+            message.success(`Claimed milestone: ${milestone.message}`);
             // Mark milestone as claimed
             const updatedMilestones = [...milestones];
             updatedMilestones[index] = { ...milestone, claimed: true };

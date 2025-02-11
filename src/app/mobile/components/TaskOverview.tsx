@@ -1,11 +1,12 @@
 "use client"
 
-import { useTasks } from '../hooks/useTasks'
+import { useTasks } from '../hooks/useTasks';
+import { Skeleton } from "antd";
 
 export default function TaskOverview() {
     const { tasks, loading, error } = useTasks()
 
-    if (loading) return <div>Loading...</div>
+    if (loading) return  <Skeleton active />
     if (error) return <div>Error: {error}</div>
 
     return (

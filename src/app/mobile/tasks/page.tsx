@@ -10,6 +10,9 @@ import { BottomNav } from '@/components/navigation/BottomNav';
 import { Task, TaskStats as TaskStatsType } from '@/types/task';
 import { fetchTasksRequest } from '@/modules/private/tasks/actions';
 
+import { Skeleton } from "antd";
+
+
 export default function TasksPage() {
   const dispatch = useDispatch();
   const tasks = useSelector(selectTasks);
@@ -31,13 +34,7 @@ export default function TasksPage() {
     dispatch(fetchTasksRequest());
   }, [dispatch]);
 
-  if (isLoading) {
-    return (
-      <div className="bg-gradient-to-br from-gray-900 to-black text-white font-sans min-h-screen flex items-center justify-center">
-        <div className="text-xl">Loading...</div>
-      </div>
-    );
-  }
+  if (isLoading)  return <Skeleton />
 
   if (error) {
     return (

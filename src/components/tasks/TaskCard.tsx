@@ -70,7 +70,7 @@ export const TaskCard: FC<TaskCardProps> = ({ task   , onWatchAd }) => {
           task.status === 'locked' ? 'bg-gray-700/20 text-gray-400' :
           'bg-purple-500/20 text-purple-400'
         }`}>
-          <TaskIcon type={task.type} />
+          <TaskIcon type={ 'ad'} />
         </div>
         <div className="flex-1">
           <h4 className="font-medium text-white flex items-center justify-between">

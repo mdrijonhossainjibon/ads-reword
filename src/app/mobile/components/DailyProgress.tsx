@@ -1,11 +1,11 @@
 "use client"
 
-import { useProgress } from '../hooks/useProgress'
-
+import { useProgress } from '../hooks/useProgress';
+import { Skeleton } from "antd";
 export default function DailyProgress() {
     const { progress, loading, error } = useProgress()
 
-    if (loading) return <div>Loading...</div>
+    if (loading) return  <Skeleton active />
     if (error) return <div>Error: {error}</div>
     if (!progress) return null
 

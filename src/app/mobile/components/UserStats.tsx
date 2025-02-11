@@ -1,16 +1,15 @@
 "use client"
 
-import { useUserStats } from '../hooks/useUserStats'
+import { useUserStats } from '../hooks/useUserStats';
+import { Skeleton } from "antd";
 
 export default function UserStats() {
     const { stats, loading, error } = useUserStats()
 
-    if (loading) return <div>Loading...</div>
+    if (loading) return  <Skeleton active />
     if (error) return <div>Error: {error}</div>
     if (!stats) return null
 
-
-    console.log(stats);
 
     return (
         <div className="w-full max-w-md bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 mb-6">

@@ -14,15 +14,7 @@ import { signOut, useSession } from 'next-auth/react';
  
 export default function MobilePage() {
     const router = useRouter();
-    const user = useTelegramUser();
-    const {  status } = useSession();
-    
-    
-
-     if(status === 'unauthenticated') {
-       router.push('/mobile/telegram_access');
-     }
-
+   
   
     return (
         <>
